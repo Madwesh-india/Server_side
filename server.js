@@ -11,6 +11,8 @@ var mobile = "false";
 var ESP = "false";
 var pc = "false";
 var copy = false;
+
+
 wss.on('connection', (ws) => {
   //   ws.send(JSON.stringify({
   //     conection:"true",
@@ -75,6 +77,18 @@ wss.on('connection', (ws) => {
             pc: pc
           })
         }));
+      }
+    }
+    else if(message.isfirst == "false"){
+      if(message.device == "mobile"){
+        clients.forEach((value, key, map) => {
+          if(value.device == message.target){
+            key.send(JSON.stringify({
+              conection:"message",
+              message:message.value
+            }));
+          }
+        })
       }
     }
   });
